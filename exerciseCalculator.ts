@@ -8,12 +8,12 @@ interface ExerciseResult {
   ratingDescription: string;
 }
 
-interface ExerciseParameters {
-  args: Array<number>;
+export interface ExerciseParameters {
+  daily_exercises: Array<number>;
   target: number;
 }
 
-const parseExerciseArguments = (args: Array<string>): ExerciseParameters => {
+/*const parseExerciseArguments = (args: Array<string>): ExerciseParameters => {
   if (args.length < 4) throw new Error("Missing exercises");
   const isNumberTarget = !isNaN(Number(args[2]));
   const dailyExerciseArguments = args.slice(3);
@@ -29,7 +29,7 @@ const parseExerciseArguments = (args: Array<string>): ExerciseParameters => {
   } else {
     throw new Error("All arguments provided must be numbers!");
   }
-};
+};*/
 
 interface ExerciseRating {
   rating: number;
@@ -73,12 +73,12 @@ export const calculateExercises = (
   };
 };
 
-try {
+/*try {
   const { args, target } = parseExerciseArguments(process.argv);
   console.log(calculateExercises(args, target));
 } catch (e) {
   console.log("Error, something bad happened, message: ", e);
-}
+}*/
 
 //const exerciseResults = [3, 0, 2, 4.5, 0, 3, 1]; // TODO: Args number each?
 //const avgHourlyTarget = 2; // TODO: Args number this too?

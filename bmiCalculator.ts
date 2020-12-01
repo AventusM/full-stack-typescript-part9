@@ -1,11 +1,11 @@
 type BMIResult = string;
 
-interface NumberBMIArgs {
+/*interface NumberBMIArgs {
   heightCM: number;
   weightKG: number;
-}
+}*/
 
-const parseBMIArguments = (args: Array<string>): NumberBMIArgs => {
+/*const parseBMIArguments = (args: Array<string>): NumberBMIArgs => {
   if (args.length !== 4)
     throw new Error(
       `Required arguments: 4. You have ${args.length} arguments provided`
@@ -21,7 +21,7 @@ const parseBMIArguments = (args: Array<string>): NumberBMIArgs => {
   } else {
     throw new Error("Provided values weren't numbers!");
   }
-};
+};*/
 
 const heightCMtoMeter = (heightCM: number): number => {
   return heightCM / 100;
@@ -35,12 +35,12 @@ export const calculateBmi = (heightCM: number, weightKG: number): BMIResult => {
   else return "You're obese";
 };
 
-try {
+/*try {
   const { heightCM, weightKG } = parseBMIArguments(process.argv);
   console.log(calculateBmi(heightCM, weightKG));
 } catch (e) {
   console.log("Error, something bad happened, message:", e);
-}
+}*/
 
 /*console.log(calculateBmi(180, 74));
 console.log(calculateBmi(180, 84));
