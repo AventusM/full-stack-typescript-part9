@@ -1,4 +1,5 @@
 type BMIResult = string;
+
 interface NumberBMIArgs {
   heightCM: number;
   weightKG: number;
@@ -26,7 +27,7 @@ const heightCMtoMeter = (heightCM: number): number => {
   return heightCM / 100;
 };
 
-const calculateBmi = (heightCM: number, weightKG: number): BMIResult => {
+export const calculateBmi = (heightCM: number, weightKG: number): BMIResult => {
   const bmi = weightKG / Math.pow(heightCMtoMeter(heightCM), 2);
   if (bmi < 18.5) return "You're underweight";
   else if (18.5 <= bmi && bmi < 25) return "Normal (healthy weight)";

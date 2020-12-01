@@ -52,7 +52,7 @@ const rateExercisePeriod = (
     };
 };
 
-const calculateExercises = (
+export const calculateExercises = (
   args: Array<number>,
   target: number
 ): ExerciseResult => {
