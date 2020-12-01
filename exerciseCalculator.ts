@@ -1,5 +1,3 @@
-type exerciseValue = number;
-
 interface ExerciseResult {
   periodLength: number;
   trainingDays: number;
@@ -9,6 +7,29 @@ interface ExerciseResult {
   rating: number;
   ratingDescription: string;
 }
+
+interface ExerciseParameters {
+  args: Array<number>;
+  target: number;
+}
+
+const parseExerciseArguments = (args: Array<string>): ExerciseParameters => {
+  if (args.length < 4) throw new Error("Missing exercises");
+  const isNumberTarget = !isNaN(Number(args[2]));
+  const dailyExerciseArguments = args.slice(3);
+  const areNumbersDaily = !dailyExerciseArguments
+    .map((arg: string) => isNaN(parseFloat(arg)))
+    .find((nanStatus: boolean) => nanStatus === true);
+
+  if (isNumberTarget && areNumbersDaily) {
+    return {
+      args: dailyExerciseArguments.map((arg) => parseFloat(arg)),
+      target: Number(args[2]),
+    };
+  } else {
+    throw new Error("All arguments provided must be numbers!");
+  }
+};
 
 interface ExerciseRating {
   rating: number;
@@ -32,8 +53,8 @@ const rateExercisePeriod = (
 };
 
 const calculateExercises = (
-  args: Array<exerciseValue>,
-  target: exerciseValue
+  args: Array<number>,
+  target: number
 ): ExerciseResult => {
   const periodLength: number = args.length;
   const trainingDays: number = args.filter((day: number) => day > 0).length;
@@ -52,7 +73,13 @@ const calculateExercises = (
   };
 };
 
-const exerciseResults = [3, 0, 2, 4.5, 0, 3, 1]; // TODO: Args number each?
-const avgHourlyTarget = 2; // TODO: Args number this too?
+try {
+  const { args, target } = parseExerciseArguments(process.argv);
+  console.log(calculateExercises(args, target));
+} catch (e) {
+  console.log("Error, something bad happened, message: ", e.message);
+}
 
-console.log(calculateExercises(exerciseResults, avgHourlyTarget));
+//const exerciseResults = [3, 0, 2, 4.5, 0, 3, 1]; // TODO: Args number each?
+//const avgHourlyTarget = 2; // TODO: Args number this too?
+//console.log(calculateExercises(exerciseResults, avgHourlyTarget));
