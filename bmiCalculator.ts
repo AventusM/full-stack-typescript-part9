@@ -8,11 +8,11 @@ interface NumberBMIArgs {
 const parseBMIArguments = (args: Array<string>): NumberBMIArgs => {
   if (args.length !== 4)
     throw new Error(
-      "Required arguments: 4, you have " + args.length + " arguments provided"
+      `Required arguments: 4. You have ${args.length} arguments provided`
     );
 
-  const numHeightCM: number = Number(args[2]);
-  const numWeightKG: number = Number(args[3]);
+  const numHeightCM = Number(args[2]);
+  const numWeightKG = Number(args[3]);
   if (!isNaN(numHeightCM) && !isNaN(numWeightKG)) {
     return {
       heightCM: numHeightCM,
@@ -39,7 +39,7 @@ try {
   const { heightCM, weightKG } = parseBMIArguments(process.argv);
   console.log(calculateBmi(heightCM, weightKG));
 } catch (e) {
-  console.log("Error, something bad happened, message:", e.message);
+  console.log("Error, something bad happened, message:", e);
 }
 
 /*console.log(calculateBmi(180, 74));

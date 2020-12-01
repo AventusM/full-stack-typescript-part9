@@ -25,7 +25,7 @@ try {
   const { first, second } = parseArgs(process.argv);
   multiplicator(first, second, "Multiplication result:");
 } catch (e) {
-  console.log("error: ", e.message);
+  console.log("error: ", e);
 }
 
 //const a: number = Number(process.argv[2]);

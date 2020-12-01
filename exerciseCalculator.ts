@@ -77,7 +77,7 @@ try {
   const { args, target } = parseExerciseArguments(process.argv);
   console.log(calculateExercises(args, target));
 } catch (e) {
-  console.log("Error, something bad happened, message: ", e.message);
+  console.log("Error, something bad happened, message: ", e);
 }
 
 //const exerciseResults = [3, 0, 2, 4.5, 0, 3, 1]; // TODO: Args number each?
