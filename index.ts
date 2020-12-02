@@ -1,53 +1,20 @@
 import express from "express";
-import { calculateBmi } from "./bmiCalculator";
-import { calculateExercises, ExerciseParameters } from "./exerciseCalculator";
-
+import cors from "cors";
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-app.get("/hello", (_req, res) => {
-  res.send("Hello Full Stack!");
+const PORT = 3001;
+
+app.get("/ping", (_req, res) => {
+  res.send("pong");
 });
 
-app.get("/bmi", (req, res) => {
-  const { height, weight } = req.query;
-
-  if (!height || !weight) {
-    res.status(404).send({ error: "missing parameters" });
-  } else if (isNaN(Number(height)) || isNaN(Number(weight))) {
-    res.status(404).send({ error: "malformatted parameters" });
-  }
-
-  const bmi = calculateBmi(Number(weight), Number(height));
-  res.send({
-    weight,
-    height,
-    bmi,
-  });
+app.get("/api/ping", (_req, res) => {
+  console.log("someone pinged here");
+  res.send("pongers");
 });
-
-app.post("/exercises", (req, res) => {
-  const { daily_exercises, target } = req.body as ExerciseParameters;
-
-  const hasNaNinArgs =
-    daily_exercises
-      .map((item: number) => isNaN(Number(item)))
-      .filter((nanValue: boolean) => nanValue === false).length === 0;
-
-
-  if (!daily_exercises || !target) {
-    res.status(404).send({ error: "missing parameters" });
-  } else if (isNaN(target) || hasNaNinArgs) {
-    res.status(404).send({ error: "malformatted parameters" });
-  }
-
-  const exerciseResult = calculateExercises(daily_exercises, target);
-  res.send({
-    ...exerciseResult,
-  });
-});
-
-const PORT = 3002;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
