@@ -22,6 +22,8 @@ export type Patient = {
   occupation: string;
 };
 
+export type NONCriticalPatientData = Omit<Patient, "ssn">;
+
 export type Diagnosis = {
   code: string;
   name: string;

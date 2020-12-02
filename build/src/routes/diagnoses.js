@@ -4,12 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const diagnosisService_1 = require("../services/diagnosisService");
 const router = express_1.default.Router();
-const diaryService_1 = __importDefault(require("../services/diaryService"));
 router.get("/", (_req, res) => {
-    res.send(diaryService_1.default.getNonSensitiveEntries());
-});
-router.post("/", (_req, res) => {
-    res.send("Saving a diary!");
+    res.send(diagnosisService_1.getDiagnoses());
 });
 exports.default = router;
