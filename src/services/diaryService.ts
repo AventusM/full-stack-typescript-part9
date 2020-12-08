@@ -1,8 +1,13 @@
 import { diaries } from "../../data/diaries";
-import { DiaryEntry, NonSensitiveDiaryEntry } from "../types";
+import { DiaryEntry, NewDiaryEntry, NonSensitiveDiaryEntry } from "../types";
 
 // Avoid typecasting (xyzData as abcType) like in the row below
 //const diaries: Array<DiaryEntry> = diaryData as Array<DiaryEntry>;
+
+// Allow undefined result (naturally)
+const findById = (id: number): DiaryEntry | undefined => {
+  return diaries.find((diary) => diary.id === id);
+};
 
 // Array<DiaryEntry> = DiaryEntry[]
 const getEntries = (): DiaryEntry[] => {
@@ -19,12 +24,19 @@ const getNonSensitiveEntries = (): NonSensitiveDiaryEntry[] => {
   }));
 };
 
-const addEntry = () => {
-  return null;
+const addDiaryEntry = (entry: NewDiaryEntry): DiaryEntry => {
+  const newObject = {
+    id: diaries.length + 1,
+    ...entry,
+  };
+
+  diaries.push(newObject); // Cant use diaries = diaries.concat(...) since its not a variable
+  return newObject;
 };
 
 export default {
   getEntries,
-  addEntry,
+  addDiaryEntry,
   getNonSensitiveEntries,
+  findById,
 };
