@@ -1,5 +1,7 @@
 import { Patient } from "../src/types";
-export const patientData: Patient[] = [
+import utils from "../src/utils";
+
+const rawPatientData = [
   {
     id: "d2773336-f723-11e9-8f0b-362b9e155667",
     name: "John McClane",
@@ -41,3 +43,9 @@ export const patientData: Patient[] = [
     occupation: "Digital evangelist",
   },
 ];
+
+export const patientData: Patient[] = rawPatientData.map((item) => {
+  const parsedPatient = utils.toNewPatient(item) as Patient;
+  parsedPatient.id = item.id;
+  return parsedPatient;
+});

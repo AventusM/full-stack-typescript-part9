@@ -3,7 +3,7 @@ import express from "express";
 const router = express.Router();
 
 import diaryService from "../services/diaryService";
-import toNewDiaryEntry from "../utils";
+import utils from "../utils";
 
 router.get("/:id", (req, res) => {
   const foundDiary = diaryService.findById(Number(req.params.id));
@@ -20,7 +20,7 @@ router.get("/", (_req, res) => {
 
 router.post("/", (req, res) => {
   try {
-    const newDiaryEntry = toNewDiaryEntry(req.body);
+    const newDiaryEntry = utils.toNewDiaryEntry(req.body);
     const addedEntry = diaryService.addDiaryEntry(newDiaryEntry);
     res.json(addedEntry);
   } catch (e) {
