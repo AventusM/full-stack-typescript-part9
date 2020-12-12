@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Header, Icon } from "semantic-ui-react";
 import { apiBaseUrl } from "../constants";
-import { useStateValue } from "../state";
+import { useStateValue, setLatestPatient } from "../state";
 import { Patient } from "../types";
 
 const PatientInfoPage: React.FC = () => {
@@ -18,10 +18,7 @@ const PatientInfoPage: React.FC = () => {
           const { data: singlePatientDataFromApi } = await axios.get<Patient>(
             `${apiBaseUrl}/patients/${id}`
           );
-          dispatch({
-            type: "SET_LATEST_PATIENT",
-            payload: singlePatientDataFromApi,
-          });
+          dispatch(setLatestPatient(singlePatientDataFromApi));
         } catch (e) {
           console.error(e);
         }
@@ -40,7 +37,15 @@ const PatientInfoPage: React.FC = () => {
     <div className="App">
       <Header as="h2">
         {latestPatient.name}
-        <Icon name={latestPatient.gender === "male" ? "mars" : "venus"} />
+        <Icon
+          name={
+            latestPatient.gender === "male"
+              ? "mars"
+              : latestPatient.gender === "female"
+              ? "venus"
+              : "genderless"
+          }
+        />
       </Header>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <p>ssn: {latestPatient.ssn}</p>

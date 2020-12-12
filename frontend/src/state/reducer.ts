@@ -1,5 +1,6 @@
 import { State } from "./state";
 import { Patient } from "../types";
+import { CommentAction } from "semantic-ui-react";
 
 export type Action =
   | {
@@ -44,4 +45,25 @@ export const reducer = (state: State, action: Action): State => {
     default:
       return state;
   }
+};
+
+export const setLatestPatient = (patientData: Patient): Action => {
+  return {
+    type: "SET_LATEST_PATIENT",
+    payload: patientData,
+  };
+};
+
+export const setPatientList = (patientList: Patient[]): Action => {
+  return {
+    type: "SET_PATIENT_LIST",
+    payload: patientList,
+  };
+};
+
+export const addPatient = (newPatientData: Patient): Action => {
+  return {
+    type: "ADD_PATIENT",
+    payload: newPatientData,
+  };
 };
