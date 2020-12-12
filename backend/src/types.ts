@@ -30,14 +30,20 @@ export type NonSensitiveDiaryEntry = Omit<DiaryEntry, "comment">;
 // No id ready when adding a new entry
 export type NewDiaryEntry = Omit<DiaryEntry, "id">;
 
-export type Patient = {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {}
+
+export interface Patient {
   id: string;
   name: string;
-  dateOfBirth: string;
   ssn: string;
-  gender: Gender;
   occupation: string;
-};
+  gender: Gender;
+  dateOfBirth: string;
+  entries: Entry[];
+}
+
+export type PublicPatient = Omit<Patient, "ssn" | "entries">;
 
 export type NONCriticalPatientData = Omit<Patient, "ssn">;
 

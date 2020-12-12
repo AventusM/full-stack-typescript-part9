@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import express from "express";
 const router = express.Router();
 
 import patientService from "../services/patientService";
 import utils from "../utils";
+
+router.get("/:id", (req, res) => {
+  const foundPatient = patientService.findById(req.params.id);
+  if (foundPatient) {
+    res.send(foundPatient);
+  } else {
+    res.status(404).send({ error: "Not found" });
+  }
+});
 
 router.get("/", (_req, res) => {
   res.send(patientService.getNonSSNPatientsData());
@@ -15,7 +25,6 @@ router.post("/", (req, res) => {
     const addedPatientEntry = patientService.addPatientEntry(parsedPatientData);
     res.json(addedPatientEntry);
   } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     res.status(400).send({ error: e.message });
   }
 });
