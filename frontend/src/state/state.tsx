@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Gender, Patient } from "../types";
+import { Diagnosis, Gender, Patient } from "../types";
 
 import { Action } from "./reducer";
 
 export type State = {
   latestPatient: Patient;
   patients: { [id: string]: Patient };
+  diagnoses: { [code: string]: Diagnosis };
 };
 
 const initialState: State = {
@@ -19,6 +20,7 @@ const initialState: State = {
     entries: [],
   },
   patients: {},
+  diagnoses: {},
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

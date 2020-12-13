@@ -11,6 +11,7 @@ interface EntriesProps {
 }
 
 const PatientInfoEntries: React.FC<EntriesProps> = (props) => {
+  const [{ diagnoses: fetchedDiagnosesData }] = useStateValue();
   return (
     <Fragment>
       {props.entries.length > 0 && (
@@ -22,7 +23,11 @@ const PatientInfoEntries: React.FC<EntriesProps> = (props) => {
                 {entry.date} {entry.description}
                 <ul>
                   {entry.diagnosisCodes?.map((diagnosis) => {
-                    return <li key={diagnosis}>{diagnosis}</li>;
+                    return (
+                      <li key={diagnosis}>
+                        {diagnosis} {fetchedDiagnosesData[diagnosis].name}
+                      </li>
+                    );
                   })}
                 </ul>
               </div>
