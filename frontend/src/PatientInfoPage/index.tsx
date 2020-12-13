@@ -1,10 +1,38 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Header, Icon } from "semantic-ui-react";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, setLatestPatient } from "../state";
-import { Patient } from "../types";
+import { Entry, Patient } from "../types";
+
+interface EntriesProps {
+  entries: Entry[];
+}
+
+const PatientInfoEntries: React.FC<EntriesProps> = (props) => {
+  return (
+    <Fragment>
+      {props.entries.length > 0 && (
+        <div style={{ marginTop: 20 }}>
+          <Header as="h4">entries</Header>
+          {props.entries.map((entry) => {
+            return (
+              <div key={entry.id}>
+                {entry.date} {entry.description}
+                <ul>
+                  {entry.diagnosisCodes?.map((diagnosis) => {
+                    return <li key={diagnosis}>{diagnosis}</li>;
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </Fragment>
+  );
+};
 
 const PatientInfoPage: React.FC = () => {
   const [{ latestPatient }, dispatch] = useStateValue();
@@ -47,10 +75,11 @@ const PatientInfoPage: React.FC = () => {
           }
         />
       </Header>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <p>ssn: {latestPatient.ssn}</p>
-        <p>occupation: {latestPatient.occupation}</p>
-      </div>
+      <p style={{ margin: 0, padding: 0 }}>ssn: {latestPatient.ssn}</p>
+      <p style={{ margin: 0, padding: 0 }}>
+        occupation: {latestPatient.occupation}
+      </p>
+      <PatientInfoEntries entries={latestPatient.entries} />
     </div>
   );
 };

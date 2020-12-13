@@ -16,6 +16,7 @@ const initialState: State = {
     gender: Gender.Male,
     dateOfBirth: "",
     ssn: "",
+    entries: [],
   },
   patients: {},
 };

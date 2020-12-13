@@ -1,6 +1,5 @@
 import { State } from "./state";
 import { Patient } from "../types";
-import { CommentAction } from "semantic-ui-react";
 
 export type Action =
   | {
