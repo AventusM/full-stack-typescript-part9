@@ -2,12 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { patientData } from "../../data/patients";
 // import types
-import {
-  NewPatient,
-  NONCriticalPatientData,
-  Patient,
-  PublicPatient,
-} from "../types";
+import { NewPatient, NONCriticalPatientData, Patient } from "../types";
 // function to be exported, using data and types
 const getNonSSNPatientsData = (): NONCriticalPatientData[] => {
   // Remember to filter out data itself as TypeScript doesnt filter it by itself
@@ -33,7 +28,7 @@ const addPatientEntry = (patientEntry: NewPatient): Patient => {
   return newPatientEntry;
 };
 
-const findById = (id: string): PublicPatient | undefined => {
+const findById = (id: string): Patient | undefined => {
   return patientData.find((patient) => patient.id === id);
 };
 

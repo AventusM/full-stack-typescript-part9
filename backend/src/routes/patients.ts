@@ -6,10 +6,24 @@ const router = express.Router();
 import patientService from "../services/patientService";
 import utils from "../utils";
 
+// Temporary validation as of 9.19.
+import { AllEntryTypes } from "../types";
+
 router.get("/:id", (req, res) => {
+  // 1. Find diary data through patientService
   const foundPatient = patientService.findById(req.params.id);
+
   if (foundPatient) {
-    res.send(foundPatient);
+    // 2. Parse found diary data through utils (later). As of 9.19 it is enough to check that field type has a correct value
+    const allValidEntryTypes =
+      foundPatient?.entries
+        .map((entry) => Object.values(AllEntryTypes).includes(entry.type))
+        .findIndex((result) => result === false) === -1;
+    if (allValidEntryTypes) {
+      res.send(foundPatient);
+    } else {
+      res.status(404).send({ error: "Incorrect type found" });
+    }
   } else {
     res.status(404).send({ error: "Not found" });
   }
