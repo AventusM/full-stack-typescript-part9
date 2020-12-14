@@ -1,10 +1,16 @@
 import axios from "axios";
 import React, { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, Header, Icon } from "semantic-ui-react";
+import { Card, Header, Icon, Button } from "semantic-ui-react";
+import AddDoctorDiagnosisModal from "../AddDoctorDiagnosisModal";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, setLatestPatient } from "../state";
-import { AllEntryTypes, Entry, Patient } from "../types";
+import {
+  AllEntryTypes,
+  DoctorDiagnosisFormValues,
+  Entry,
+  Patient,
+} from "../types";
 
 interface EntriesProps {
   entries: Entry[];
@@ -118,24 +124,8 @@ const PatientInfoEntries: React.FC<EntriesProps> = (props) => {
         <div style={{ marginTop: 20 }}>
           <Header as="h4">entries</Header>
           {props.entries.map((entry) => (
-            <EntryDetails entry={entry} />
+            <EntryDetails key={entry.id} entry={entry} />
           ))}
-          {/*props.entries.map((entry) => {
-            return (
-              <div key={entry.id}>
-                {entry.date} {entry.description}
-                <ul>
-                  {entry.diagnosisCodes?.map((diagnosis) => {
-                    return (
-                      <li key={diagnosis}>
-                        {diagnosis} {fetchedDiagnosesData[diagnosis].name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            );
-          })*/}
         </div>
       )}
     </Fragment>
@@ -145,6 +135,33 @@ const PatientInfoEntries: React.FC<EntriesProps> = (props) => {
 const PatientInfoPage: React.FC = () => {
   const [{ latestPatient }, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string | undefined>();
+
+  const openModal = (): void => setModalOpen(true);
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
+
+  const submitNewDoctorEventEntry = async (
+    values: DoctorDiagnosisFormValues
+  ) => {
+    try {
+      const { data: updatedPatientData } = await axios.post<Patient>(
+        `${apiBaseUrl}/patients/${id}/entries`,
+        values
+      );
+
+      dispatch(setLatestPatient(updatedPatientData)); // No need for setters / getters. Simply 'refetch'
+      closeModal();
+    } catch (e) {
+      console.error(e.response.data);
+      setError(e.response.data.error);
+    }
+  };
 
   useEffect(() => {
     const checkAndFetchPatientInfo = async () => {
@@ -188,6 +205,15 @@ const PatientInfoPage: React.FC = () => {
         occupation: {latestPatient.occupation}
       </p>
       <PatientInfoEntries entries={latestPatient.entries} />
+      <AddDoctorDiagnosisModal
+        modalOpen={modalOpen}
+        onSubmit={submitNewDoctorEventEntry}
+        error={error}
+        onClose={closeModal}
+      />
+      <Button style={{ marginTop: 20 }} onClick={() => openModal()}>
+        Add new entry
+      </Button>
     </div>
   );
 };

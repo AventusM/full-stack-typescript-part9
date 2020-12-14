@@ -37,7 +37,7 @@ export enum HealthCheckRating {
 
 export enum AllEntryTypes {
   Hospital = "Hospital",
-  OccupationalHealthCare = "OccupationalHealthcare",
+  OccupationalHealthCare = "OccupationalHealthCare",
   HealthCheck = "HealthCheck",
 }
 
@@ -71,3 +71,7 @@ export type Entry =
   | HospitalEntry
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
+
+export type DoctorDiagnosisFormValues = Omit<HealthCheckEntry, "id">;
+//| Omit<HospitalEntry, "id">
+//| Omit<OccupationalHealthcareEntry, "id">;

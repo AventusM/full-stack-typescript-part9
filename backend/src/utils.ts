@@ -16,6 +16,7 @@ import {
   AllEntryTypes,
   DischargeInfo,
   SickLeaveInfo,
+  HealthCheckRating,
 } from "./types";
 
 const assertNever = (value: never): never => {
@@ -82,6 +83,10 @@ const isParamSickLeaveInfo = (param: any): param is SickLeaveInfo => {
     isDate(param.startDate) &&
     isDate(param.endDate)
   );
+};
+
+const isHealthCheckRating = (param: any): param is HealthCheckRating => {
+  return Object.values(HealthCheckRating).includes(param);
 };
 
 const parseComment = (comment: any): string => {
@@ -232,8 +237,14 @@ const parseSickLeave = (paramSickLeave: any): SickLeaveInfo | undefined => {
   return paramSickLeave;
 };
 
-const parseHealthCheckRating = (paramHealthCheckRating: any): number => {
-  if (!paramHealthCheckRating || !Number(paramHealthCheckRating)) {
+const parseHealthCheckRating = (
+  paramHealthCheckRating: any
+): HealthCheckRating => {
+  // 0 as parameter --> !paramHealthCheckRating will be met -.-
+  if (
+    isNaN(Number(paramHealthCheckRating)) ||
+    !isHealthCheckRating(paramHealthCheckRating)
+  ) {
     throw new Error(
       "Incorrect or missing paramHealthCheckRating: " + paramHealthCheckRating
     );
@@ -266,7 +277,6 @@ const toNewPatient = (object: any): NewPatient => {
 
 const toNewDoctorVisitEntry = (object: any): NewDoctorVisitEntry => {
   const type: AllEntryTypes = parseDoctorVisitType(object.type);
-
   switch (type) {
     case AllEntryTypes.Hospital:
       return {

@@ -55,7 +55,7 @@ export const TextField: React.FC<TextProps> = ({
 /*
   for exercises 9.24.-
 */
-interface NumberProps extends FieldProps {
+export interface NumberProps extends FieldProps {
   label: string;
   errorMessage?: string;
   min: number;
