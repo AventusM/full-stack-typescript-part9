@@ -30,7 +30,7 @@ export type NonSensitiveDiaryEntry = Omit<DiaryEntry, "comment">;
 // No id ready when adding a new entry
 export type NewDiaryEntry = Omit<DiaryEntry, "id">;
 
-interface BaseEntry {
+export interface BaseEntry {
   id: string;
   description: string;
   date: string;
@@ -47,7 +47,7 @@ export enum HealthCheckRating {
 
 export enum AllEntryTypes {
   Hospital = "Hospital",
-  OccupationalHealthCare = "OccupationalHealthcare",
+  OccupationalHealthCare = "OccupationalHealthCare",
   HealthCheck = "HealthCheck",
 }
 
@@ -56,7 +56,7 @@ export interface HealthCheckEntry extends BaseEntry {
   healthCheckRating: HealthCheckRating;
 }
 
-interface SickLeaveInfo {
+export interface SickLeaveInfo {
   startDate: string;
   endDate: string;
 }
@@ -67,7 +67,7 @@ export interface OccupationalHealthcareEntry extends BaseEntry {
   sickLeave?: SickLeaveInfo; // Optional
 }
 
-interface DischargeInfo {
+export interface DischargeInfo {
   date: string;
   criteria: string;
 }
@@ -97,6 +97,11 @@ export type PublicPatient = Omit<Patient, "ssn" | "entries">; // What is this be
 export type NONCriticalPatientData = Omit<Patient, "ssn">;
 
 export type NewPatient = Omit<Patient, "id">;
+
+export type NewDoctorVisitEntry =
+  | Omit<HospitalEntry, "id">
+  | Omit<OccupationalHealthcareEntry, "id">
+  | Omit<HealthCheckEntry, "id">;
 
 export enum Gender {
   Male = "male",

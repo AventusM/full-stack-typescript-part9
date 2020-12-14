@@ -43,4 +43,22 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/:id/entries", (req, res) => {
+  try {
+    const foundPatient = patientService.findById(req.params.id);
+    if (foundPatient) {
+      const parsedEntry = utils.toNewDoctorVisitEntry(req.body);
+      /*       const updatedPatientEntry = patientService.addNewDoctorVisitEntry(
+        foundPatient.id,
+        parsedEntry
+      ); */
+      res.json(parsedEntry);
+    } else {
+      res.status(404).send({ error: "Not found" });
+    }
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
+});
+
 export default router;
