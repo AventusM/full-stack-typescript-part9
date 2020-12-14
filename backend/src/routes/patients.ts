@@ -48,11 +48,11 @@ router.post("/:id/entries", (req, res) => {
     const foundPatient = patientService.findById(req.params.id);
     if (foundPatient) {
       const parsedEntry = utils.toNewDoctorVisitEntry(req.body);
-      /*       const updatedPatientEntry = patientService.addNewDoctorVisitEntry(
-        foundPatient.id,
+      const updatedPatientEntry = patientService.addNewDoctorVisitEntry(
+        foundPatient,
         parsedEntry
-      ); */
-      res.json(parsedEntry);
+      );
+      res.json(updatedPatientEntry);
     } else {
       res.status(404).send({ error: "Not found" });
     }

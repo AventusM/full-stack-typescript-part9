@@ -47,7 +47,6 @@ const isGender = (param: any): param is Gender => {
 };
 
 const isDoctorVisitType = (param: any): param is AllEntryTypes => {
-  console.log("isDoctorVisitType param", param);
   return Object.values(AllEntryTypes).includes(param);
 };
 

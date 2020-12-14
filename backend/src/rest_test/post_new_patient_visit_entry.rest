@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/patients/d2773822-f723-11e9-8f0b-362b9e155667/entries
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
     "type": "OccupationalHealthCare",
     "description": "Yearly control visit. Cholesterol levels back to normal.",
     "employerName": "Test employer",
-    "sickLeave": {"endDate": "2019-10-25"}
+    "sickLeave": {"startDate": "2019-10-20", "endDate": "2019-10-25"}
     //"diagnosisCodes": ["Z57.1"],
     //"healthCheckRating": 10
 }
