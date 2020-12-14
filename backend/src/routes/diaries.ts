@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import express from "express";
+/*import express from "express";
 const router = express.Router();
 
 import diaryService from "../services/diaryService";
@@ -28,4 +28,4 @@ router.post("/", (req, res) => {
   }
 });
 
-export default router;
+export default router;*/
